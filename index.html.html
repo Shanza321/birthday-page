@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magical Romantic Birthday Slideshow for Hassan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body, html { height: 100%; margin: 0; font-family: 'Playfair Display', serif; overflow: hidden; position: relative; color: #fce5cd; }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center / cover;
+      background-attachment: fixed;
+    }
+
+    .slideshow-container {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+    }
+
+    .slide {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 900px; width: 90%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      text-align: center;
+      z-index: 1;
+      padding: 40px;
+      border-radius: 15px;
+      background: rgba(139,0,0,0.4);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
+      color: #ffe6a7;
+      text-shadow: 0 0 6px #ff4500, 0 0 20px #ffd700;
+    }
+
+    .slide.active { opacity: 1; z-index: 2; }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      margin-bottom: 0.5em;
+      color: #ffd700;
+      text-shadow: 1px 1px 3px #330000, 2px 2px 10px #ffcc00;
+    }
+
+    p {
+      font-size: 1.6rem;
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .heart-button { position: absolute; bottom: 40px; width: 60px; height: 60px; background: red; transform: rotate(-45deg); border: none; cursor: pointer; z-index: 3; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; font-size: 0.8rem; box-shadow: 0 0 15px #ff0000, 0 0 25px #ff6347; transition: transform 0.2s; }
+    .heart-button:hover { transform: rotate(-45deg) scale(1.1); }
+    .heart-button::before, .heart-button::after { content: ''; position: absolute; width: 60px; height: 60px; background: red; border-radius: 50%; }
+    .heart-button::before { top: -30px; left: 0; }
+    .heart-button::after { left: 30px; top: 0; }
+    #prev { left: 40px; }
+    #next { right: 40px; }
+
+    .heart { position: absolute; width: 20px; height: 20px; background: radial-gradient(circle, #ff0000, #ff6b81); transform: rotate(-45deg); animation: floatUp linear infinite; opacity: 0.7; z-index: 0; }
+    .heart::before, .heart::after { content: ''; position: absolute; width: 20px; height: 20px; background: radial-gradient(circle, #ff0000, #ff6b81); border-radius: 50%; }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { left: 10px; top: 0; }
+    @keyframes floatUp { 0% { transform: translateY(0) rotate(-45deg); opacity: 0.7; } 100% { transform: translateY(-700px) rotate(-45deg); opacity: 0; } }
+
+    .sparkle { position: absolute; width: 4px; height: 4px; background: white; border-radius: 50%; opacity: 0.8; animation: sparkleTwinkle 3s infinite alternate; z-index: 0; }
+    @keyframes sparkleTwinkle { 0% { opacity: 0.2; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0.2; transform: scale(0.5); } }
+  </style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<div class="slideshow-container">
+  <div class="slide active">
+    <h1>Happy Birthday My Love</h1>
+    <p>To my dearest Hassan, the light of my life. Every heartbeat, every thought revolves around you. Your love is my guiding star, and today I celebrate the miracle that is you.</p>
+  </div>
+  <div class="slide">
+    <h1>How We Met</h1>
+    <p>The day I met you, everything changed. Your smile stole my heart, your words touched my soul. I still remember every detail, every glance, every laugh. With you, my world is brighter and fuller.</p>
+  </div>
+  <div class="slide">
+    <h1>Our Sweet Memories</h1>
+    <p>From late-night talks to walks under the stars, from silly jokes to quiet moments of comfort, every memory with you is a treasure. I cherish each second spent with you, and I can't wait for all the memories yet to come.</p>
+  </div>
+  <div class="slide">
+    <h1>Why You Mean Everything to Me</h1>
+    <p>You are my strength, my joy, my everything. Your love completes me, your touch calms me, and your smile inspires me. Every beat of my heart whispers your name, Hassan.</p>
+  </div>
+  <div class="slide">
+    <h1>My Birthday Wishes</h1>
+    <p>May your life be filled with happiness, endless love, and dreams coming true. Happy Birthday, my soulmate! Every moment with you is a blessing, and today I celebrate the amazing person you are.</p>
+  </div>
+
+  <button id="prev" class="heart-button">Previous</button>
+  <button id="next" class="heart-button">Next</button>
+</div>
+
+<script>
+let slides = document.querySelectorAll('.slide');
+let currentIndex = 0;
+function showSlide(index) { slides.forEach((slide, i) => { slide.classList.toggle('active', i === index); }); }
+document.getElementById('next').addEventListener('click', () => { currentIndex = (currentIndex + 1) % slides.length; showSlide(currentIndex); });
+document.getElementById('prev').addEventListener('click', () => { currentIndex = (currentIndex - 1 + slides.length) % slides.length; showSlide(currentIndex); });
+
+// Floating hearts
+for(let i=0; i<40; i++){ const heart = document.createElement('div'); heart.classList.add('heart'); heart.style.left = Math.random() * 100 + 'vw'; heart.style.animationDuration = (5 + Math.random() * 5) + 's'; heart.style.width = (10 + Math.random() * 30) + 'px'; heart.style.height = (10 + Math.random() * 30) + 'px'; document.body.appendChild(heart); }
+// Sparkles
+for(let i=0; i<50; i++){ const sparkle = document.createElement('div'); sparkle.classList.add('sparkle'); sparkle.style.left = Math.random() * 100 + 'vw'; sparkle.style.top = Math.random() * 100 + 'vh'; sparkle.style.animationDuration = (2 + Math.random() * 3) + 's'; document.body.appendChild(sparkle); }
+
+// Play music on first click (bypasses autoplay restrictions)
+const bgMusic = document.getElementById('bgMusic');
+document.body.addEventListener('click', ()=>{ bgMusic.play().catch(()=>{}); }, { once: true });
+</script>
+
+</body>
+</html>
